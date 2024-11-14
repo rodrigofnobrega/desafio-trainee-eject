@@ -20,11 +20,13 @@ from rest_framework.routers import DefaultRouter
 from apps.user.views import UserViewSet
 from apps.post.views import PostViewSet
 from apps.post_comments.views import CommentViewSet
+from apps.post_likes.views import LikeViewSet
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'posts', PostViewSet)
 router.register(r'comments', CommentViewSet)
+router.register(r'likes', LikeViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
