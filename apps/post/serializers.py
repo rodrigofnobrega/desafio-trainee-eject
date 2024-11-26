@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from .models import PostModel
+from apps.user.models import UserModel
 from apps.user.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+    user = serializers.PrimaryKeyRelatedField(queryset=UserModel.objects.all())
     
     class Meta:
         model = PostModel
@@ -17,3 +18,8 @@ class PostSerializer(serializers.ModelSerializer):
             'publication_date',
             'user',
         )
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['user'] = UserSerializer(instance.user).data
+        return representation
