@@ -9,6 +9,8 @@ class CommentModel(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='post_comments_images/', null=True, blank=True) 
+    video = models.FileField(upload_to='post_comments_videos/', null=True, blank=True) 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     post = models.ForeignKey(PostModel, related_name="comments", on_delete=models.CASCADE)
 
