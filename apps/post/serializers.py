@@ -20,6 +20,8 @@ class PostSerializer(serializers.ModelSerializer):
             'total_likes',
             'updated',
             'publication_date',
+            'image',
+            'video',
             'user',
         )
 

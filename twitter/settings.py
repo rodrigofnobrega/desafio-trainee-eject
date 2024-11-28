@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os 
 from pathlib import Path
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MEDIA_URL = '/media/'  # URL base para acessar arquivos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  
 
 # Application definition
 

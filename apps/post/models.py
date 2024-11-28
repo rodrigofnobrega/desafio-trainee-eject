@@ -10,6 +10,8 @@ class PostModel(models.Model):
     content = models.TextField()
     publication_date = models.DateTimeField(default=timezone.now)
     updated = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True) 
+    video = models.FileField(upload_to='post_videos/', null=True, blank=True) 
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='posts')
 
     def __str__(self):
