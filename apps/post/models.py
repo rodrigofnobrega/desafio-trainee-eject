@@ -13,4 +13,4 @@ class PostModel(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE, related_name='posts')
 
     def __str__(self):
-        return self.title
+        return f"{self.title} | {self.user}"

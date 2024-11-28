@@ -14,5 +14,5 @@ class CommentModel(models.Model):
 
 
     def __str__(self):
-        return f"{self.user.email} | {self.post.title} | {self.content}"
+        return f"{self.content} | {self.user} | {self.post}"
 
