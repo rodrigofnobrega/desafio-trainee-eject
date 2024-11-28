@@ -10,13 +10,15 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostModel
         extra_kwargs = {
-            'publication_date': {'read_only': True}
+            'publication_date': {'read_only': True},
+            'updated': {'read_only': True}
         }
         fields = (
             'id',
             'title',
             'content',
             'total_likes',
+            'updated',
             'publication_date',
             'user',
         )
@@ -28,3 +30,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     def get_total_likes(self, obj):
         return obj.likes.count()
+    
+    def update(self, instance, validated_data):
+        validated_data['updated'] = True
+        return super().update(instance, validated_data)

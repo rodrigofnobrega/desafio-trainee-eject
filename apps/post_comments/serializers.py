@@ -29,3 +29,7 @@ class CommentSerializer(serializers.ModelSerializer):
         representation['post'] = PostSerializer(instance.post).data
 
         return representation
+    
+    def update(self, instance, validated_data):
+        validated_data['updated'] = True
+        return super().update(instance, validated_data)
