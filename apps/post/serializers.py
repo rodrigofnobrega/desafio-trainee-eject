@@ -5,7 +5,8 @@ from apps.user.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(queryset=UserModel.objects.all())
-    
+    total_likes = serializers.SerializerMethodField()
+
     class Meta:
         model = PostModel
         extra_kwargs = {
@@ -15,6 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'content',
+            'total_likes',
             'publication_date',
             'user',
         )
@@ -23,3 +25,6 @@ class PostSerializer(serializers.ModelSerializer):
         representation = super().to_representation(instance)
         representation['user'] = UserSerializer(instance.user).data
         return representation
+    
+    def get_total_likes(self, obj):
+        return obj.likes.count()
