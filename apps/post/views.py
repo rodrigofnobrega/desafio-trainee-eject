@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
+from django.conf import settings
 from .models import PostModel
 from .serializers import PostSerializer
 
@@ -12,8 +13,12 @@ class PostViewSet(viewsets.ModelViewSet):
     # Endpoint para obter todos os posts de um usuário pelo ID do usuário.
     @action(detail=False, methods=['get'], url_path='user/(?P<user_id>[^/.]+)')
     def posts_by_user(self, request, user_id=None):
-        print(user_id)
         posts = PostModel.objects.filter(user_id=user_id)  
-        serializer = self.get_serializer(posts, many=True)
 
-        return Response(serializer.data)
+        paginator = PageNumberPagination()
+        paginator.page_size = self.request.query_params.get('PAGE_SIZE', settings.PAGE_SIZE)
+        paginated_comments = paginator.paginate_queryset(posts, request)
+        
+        serializer = self.get_serializer(paginated_comments, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
