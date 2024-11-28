@@ -11,3 +11,8 @@ class CommentModel(models.Model):
     updated = models.BooleanField(default=False)
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     post = models.ForeignKey(PostModel, related_name="comments", on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"{self.user.email} | {self.post.title} | {self.content}"
+
