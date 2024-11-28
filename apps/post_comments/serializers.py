@@ -11,6 +11,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommentModel
+        extra_kwargs = {
+            'updated': {'read_only': True}
+        }
         fields = (
             'id',
             'content',
