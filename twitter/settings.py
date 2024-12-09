@@ -33,6 +33,9 @@ ALLOWED_HOSTS = []
 MEDIA_URL = '/media/'  # URL base para acessar arquivos
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  
 
+AUTH_USER_MODEL = 'user.UserModel'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -151,4 +154,7 @@ PAGE_SIZE = 2
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': PAGE_SIZE,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
