@@ -7,12 +7,12 @@ from apps.post.serializers import PostSerializer
 
 class CommentSerializer(serializers.ModelSerializer):
     post = serializers.PrimaryKeyRelatedField(queryset=PostModel.objects.all())
-    user = serializers.PrimaryKeyRelatedField(queryset=UserModel.objects.all())
 
     class Meta:
         model = CommentModel
         extra_kwargs = {
-            'updated': {'read_only': True}
+            'updated': {'read_only': True},
+            'user': {'read_only': True},
         }
         fields = (
             'id',
@@ -35,3 +35,8 @@ class CommentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         validated_data['updated'] = True
         return super().update(instance, validated_data)
+    
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
+        return super().create(validated_data)

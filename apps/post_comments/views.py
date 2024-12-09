@@ -1,12 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from .models import CommentModel
 from .serializers import CommentSerializer
 
 # Create your views here.
 class CommentViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
     queryset = CommentModel.objects.all()
     serializer_class = CommentSerializer
 
