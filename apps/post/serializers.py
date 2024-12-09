@@ -4,14 +4,14 @@ from apps.user.models import UserModel
 from apps.user.serializers import UserSerializer
 
 class PostSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=UserModel.objects.all())
     total_likes = serializers.SerializerMethodField()
 
     class Meta:
         model = PostModel
         extra_kwargs = {
             'publication_date': {'read_only': True},
-            'updated': {'read_only': True}
+            'updated': {'read_only': True},
+            'user': {'read_only': True},
         }
         fields = (
             'id',
@@ -36,3 +36,8 @@ class PostSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         validated_data['updated'] = True
         return super().update(instance, validated_data)
+    
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
+        return super().create(validated_data)

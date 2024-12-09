@@ -9,7 +9,6 @@ from .serializers import PostSerializer
 # Create your views here.
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
-
     queryset = PostModel.objects.all()
     serializer_class = PostSerializer
 
