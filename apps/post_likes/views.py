@@ -1,12 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from django.conf import settings
 from .models import LikeModel
 from .serializers import LikeSerializer
 
 # Create your views here.
 class LikeViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, )
     queryset = LikeModel.objects.all()
     serializer_class = LikeSerializer
 
